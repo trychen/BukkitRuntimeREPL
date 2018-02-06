@@ -10,7 +10,6 @@ import team.unstudio.udpl.i18n.SLangI18n;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class BukkitRuntimeREPL extends JavaPlugin {

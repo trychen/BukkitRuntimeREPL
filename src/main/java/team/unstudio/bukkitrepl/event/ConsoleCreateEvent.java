@@ -11,19 +11,25 @@ public abstract class ConsoleCreateEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
     private List<javarepl.Result> results;
-    private List<Class<? extends Command>> commandsList;
+    private List<Class<? extends Command>> commands;
+    private List<String> expressions;
 
-    public ConsoleCreateEvent(List<javarepl.Result> resultList, List<Class<? extends Command>> commandsList) {
+    public ConsoleCreateEvent(List<javarepl.Result> results, List<Class<? extends Command>> commands, List<String> expressions) {
         this.results = results;
-        this.commandsList = commandsList;
+        this.commands = commands;
+        this.expressions = expressions;
     }
 
     public List<javarepl.Result> getResults() {
         return results;
     }
 
-    public List<Class<? extends Command>> getCommandsList() {
-        return commandsList;
+    public List<Class<? extends Command>> getCommands() {
+        return commands;
+    }
+
+    public List<String> getExpressions() {
+        return expressions;
     }
 
     public HandlerList getHandlers() {

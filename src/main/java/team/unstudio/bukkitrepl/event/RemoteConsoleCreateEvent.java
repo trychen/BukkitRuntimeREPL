@@ -7,8 +7,8 @@ import java.util.List;
 public class RemoteConsoleCreateEvent extends ConsoleCreateEvent {
     private int port;
 
-    public RemoteConsoleCreateEvent(int port, List<javarepl.Result> resultList, List<Class<? extends Command>> commandsList) {
-        super(resultList, commandsList);
+    public RemoteConsoleCreateEvent(int port, List<javarepl.Result> resultList, List<Class<? extends Command>> commandsList, List<String> expressions) {
+        super(resultList, commandsList, expressions);
         this.port = port;
     }
 

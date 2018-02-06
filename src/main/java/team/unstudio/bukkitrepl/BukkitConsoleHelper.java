@@ -39,10 +39,6 @@ import static javarepl.console.ConsoleConfig.consoleConfig;
 import static team.unstudio.bukkitrepl.BukkitExpression.sync;
 
 public interface BukkitConsoleHelper {
-    String[] DEFAULT_EXPRESSIONS = Arrays.array(
-            "import static team.unstudio.bukkitrepl.BukkitExpression.*;",
-            "import org.bukkit.*;");
-
     Sequence<Class<? extends Command>> DEFAULT_COMMANDS = Sequences.<Class<? extends Command>>sequence()
             .append(LoadPluginCommand.class)
             .append(InitBukkitCommand.class)
@@ -61,29 +57,34 @@ public interface BukkitConsoleHelper {
             .append(ChattingCommand.CLR.class)
             .append(ChattingCommand.SPLITTER.class);
 
-    ConsoleConfig BASE_CONFIG = consoleConfig().expressions(DEFAULT_EXPRESSIONS);
+    Sequence<String> DEFAULT_EXPRESSIONS = Sequences.<String>sequence()
+            .append("import static team.unstudio.bukkitrepl.BukkitExpression.*;")
+            .append("import org.bukkit.*;");
+
+    ConsoleConfig BASE_CONFIG = consoleConfig();
 
     @Nonnull
     static ConsoleConfig createDefaultConfig(@Nonnull Player player) {
         List<Result> resultList = Lists.newArrayList(result("my", player), result("server", Bukkit.getServer()));
+        List<Class<? extends Command>> commands = PLAYER_CONSOLE_DEFAULT_COMMANDS.toList();
+        List<String> expression = DEFAULT_EXPRESSIONS.toList();
 
-        List<Class<? extends Command>> commandsList = PLAYER_CONSOLE_DEFAULT_COMMANDS.toList();
-
-        Bukkit.getPluginManager().callEvent(new PlayerConsoleCreateEvent(player, resultList, commandsList));
-        return BASE_CONFIG.results(resultList.toArray(new Result[0])).commands(commandsList.toArray(new Class[0])).logger(createLogger(player)).sandboxed(BukkitRuntimeREPL.ENABLE_SANDBOX);
+        Bukkit.getPluginManager().callEvent(new PlayerConsoleCreateEvent(player, resultList, commands, expression));
+        return BASE_CONFIG.results(resultList.toArray(new Result[0])).commands(commands.toArray(new Class[0])).logger(createLogger(player)).sandboxed(BukkitRuntimeREPL.ENABLE_SANDBOX).expressions(expression.toArray(new String[0]));
     }
 
     @Nonnull
     static ConsoleConfig createDefaultConfig() {
-        return BASE_CONFIG.results(result("server", Bukkit.getServer())).sandboxed(BukkitRuntimeREPL.ENABLE_SANDBOX).commands(DEFAULT_COMMANDS.toArray(new Class[0]));
+        return BASE_CONFIG.results(result("server", Bukkit.getServer())).sandboxed(BukkitRuntimeREPL.ENABLE_SANDBOX).commands(DEFAULT_COMMANDS.toArray(new Class[0])).expressions(DEFAULT_EXPRESSIONS.toArray(new String[0]));
     }
 
     @Nonnull
     static ConsoleConfig createDefaultConfig(int port) {
         List<Result> resultList = Lists.newArrayList(result("server", Bukkit.getServer()));
-        List<Class<? extends Command>> commandsList = DEFAULT_COMMANDS.toList();
-        Bukkit.getPluginManager().callEvent(new RemoteConsoleCreateEvent(port, resultList, commandsList));
-        return BASE_CONFIG.results(result("server", Bukkit.getServer())).sandboxed(BukkitRuntimeREPL.ENABLE_SANDBOX).results(resultList.toArray(new Result[0])).commands(commandsList.toArray(new Class[0]));
+        List<Class<? extends Command>> commands = DEFAULT_COMMANDS.toList();
+        List<String> expression = DEFAULT_EXPRESSIONS.toList();
+        Bukkit.getPluginManager().callEvent(new RemoteConsoleCreateEvent(port, resultList, commands, expression));
+        return BASE_CONFIG.results(result("server", Bukkit.getServer())).sandboxed(BukkitRuntimeREPL.ENABLE_SANDBOX).results(resultList.toArray(new Result[0])).commands(commands.toArray(new Class[0])).expressions(expression.toArray(new String[0]));
     }
 
     @Nonnull

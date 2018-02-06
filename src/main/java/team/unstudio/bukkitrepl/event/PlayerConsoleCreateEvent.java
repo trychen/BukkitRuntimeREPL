@@ -8,8 +8,9 @@ import java.util.List;
 
 public class PlayerConsoleCreateEvent extends ConsoleCreateEvent {
     private Player player;
-    public PlayerConsoleCreateEvent(Player player, List<javarepl.Result> resultList, List<Class<? extends Command>> commandsList) {
-        super(resultList, commandsList);
+
+    public PlayerConsoleCreateEvent(Player player, List<javarepl.Result> resultList, List<Class<? extends Command>> commandsList, List<String> expressions) {
+        super(resultList, commandsList, expressions);
         this.player = player;
     }
 
