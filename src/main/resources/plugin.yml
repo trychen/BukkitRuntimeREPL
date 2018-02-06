@@ -1,0 +1,9 @@
+name: BukkitRuntimeREPL
+main: team.unstudio.bukkitrepl.BukkitRuntimeREPL
+author: Trychen
+version: 0.1
+depend: [UDPLib]
+
+commands:
+  repl:
+    usage: Open a repl process

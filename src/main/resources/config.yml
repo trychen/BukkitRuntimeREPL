@@ -1,0 +1,6 @@
+sandbox: true
+
+# 在下面添加允许运行的玩家
+# example:
+# allowed_player: [Trychen]
+allowed_player: [trychen]
