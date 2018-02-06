@@ -1,7 +1,5 @@
 # BukkitRuntimeREPL [![](https://www.jitpack.io/v/UnknownStudio/BukkitRuntimeREPL.svg)](https://www.jitpack.io/#UnknownStudio/BukkitRuntimeREPL)
 
-**Unknown Domain Spigot Plugin Library**
-
 **a simple Read-Eval-Print-Loop for Java in Bukkit/Spigot using albertlatacz/java-repl**
 
 By using this lib, you can easily develop your plugin with this repl plugin for server with BukkitAPI. This is a implement of [albertlatacz/java-repl](https://github.com/albertlatacz/java-repl)!
