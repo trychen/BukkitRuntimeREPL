@@ -2,7 +2,7 @@ package team.unstudio.bukkitrepl;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import team.unstudio.udpl.util.ActionBar;
+import team.unstudio.udpl.util.ActionBarUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +26,7 @@ public interface BukkitExpression {
         });
     }
 
-    static void aync(Runnable runnable) {
+    static void asyn(Runnable runnable) {
         Bukkit.getScheduler().runTaskAsynchronously(BukkitRuntimeREPL.getInstance(), runnable);
     }
 
@@ -54,6 +54,6 @@ public interface BukkitExpression {
     }
 
     static void actionBar(@Nonnull Player player, @Nonnull String string) {
-        ActionBar.send(player, string);
+        ActionBarUtils.send(player, string);
     }
 }

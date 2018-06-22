@@ -1,6 +1,5 @@
 package team.unstudio.bukkitrepl.event;
 
-import javarepl.Result;
 import javarepl.console.commands.Command;
 import org.bukkit.entity.Player;
 

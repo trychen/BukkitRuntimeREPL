@@ -1,13 +1,11 @@
 package team.unstudio.bukkitrepl;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import team.unstudio.udpl.command.anno.Alias;
 import team.unstudio.udpl.command.anno.Command;
 import team.unstudio.udpl.command.anno.Optional;
 import team.unstudio.udpl.command.anno.Required;
-import team.unstudio.udpl.util.ChatUtils;
 
 import java.util.stream.Collectors;
 
@@ -16,9 +14,9 @@ import static team.unstudio.bukkitrepl.BukkitRuntimeREPL.i18n;
 
 public class CommandREPL {
 
-    @Command(value = "start", permission = "repl.create")
-    public void start(CommandSender sender, @Optional(name = "Console Port", value = "-1") int port) {
-        if (port > 0) {
+    @Command(value = "remote", permission = "repl.create")
+    public void remote(CommandSender sender, @Required(name = "Console Port") int port) {
+        if (port >= 0 && port <= 65535) {
             try {
                 ConsoleManager.INSTANCE.openConsole(port);
                 sender.sendMessage(i18n("§2§l[REPL] §2Created Console Listening To Port %d Successful!", port));
@@ -26,13 +24,16 @@ public class CommandREPL {
                 sender.sendMessage(i18n("§c§l[REPL] §cCreating Console Failed!"));
                 e.printStackTrace();
             }
-        } else if (sender instanceof Player){
-            if (BukkitRuntimeREPL.isPlayerAllowed(sender.getName().toLowerCase()))
-                ConsoleManager.INSTANCE.openConsole((Player) sender);
-            else sender.sendMessage(i18n("§c§l[REPL] §cYou have no permission to create console!"));
         } else {
-            sender.sendMessage(i18n("§c§l[REPL] §cUnsupported operation!"));
+            sender.sendMessage(i18n("§c§l[REPL] §cPlease Enter A Current Port (0~65535)!"));
         }
+    }
+
+    @Command(value = "chat", permission = "repl.create", senders = Player.class)
+    public void chat(Player player) {
+        if (BukkitRuntimeREPL.isPlayerAllowed(player.getName().toLowerCase()))
+            ConsoleManager.INSTANCE.openConsole(player);
+        else player.sendMessage(i18n("§c§l[REPL] §cYou have no permission to create console!"));
     }
 
     @Command(value = "list", permission = "repl.list")
@@ -53,11 +54,11 @@ public class CommandREPL {
             Integer port = Integer.valueOf(playerOrPort);
 
             if (ConsoleManager.INSTANCE.getRemoteConsoles().stream().filter(it -> it.getPort() == port).count() == 0) {
-                throw new NumberFormatException();
+                throw new NullPointerException();
             }
 
             ConsoleManager.INSTANCE.shutdown(port);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             Player player = player(playerOrPort);
             if (player == null || ConsoleManager.INSTANCE.getConsole(player) == null) {
                 sender.sendMessage(i18n("§c§l[REPL Manager] §cNo such player or port has console!"));

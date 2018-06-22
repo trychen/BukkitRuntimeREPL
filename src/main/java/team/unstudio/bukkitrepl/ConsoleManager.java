@@ -2,13 +2,9 @@ package team.unstudio.bukkitrepl;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import javarepl.EvaluationClassLoader;
-import javarepl.completion.Completer;
 import javarepl.completion.CompletionCandidate;
 import javarepl.completion.CompletionResult;
 import javarepl.console.Console;
-import javarepl.console.SimpleConsole;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,21 +13,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
 import team.unstudio.udpl.util.CacheUtils;
 import team.unstudio.udpl.util.ChatUtils;
 import team.unstudio.udpl.util.PluginUtils;
-import team.unstudio.udpl.util.ReflectionUtils;
 
 import javax.annotation.Nonnull;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static team.unstudio.bukkitrepl.BukkitConsoleHelper.*;
-import static team.unstudio.bukkitrepl.BukkitExpression.aync;
+import static team.unstudio.bukkitrepl.BukkitExpression.asyn;
 import static team.unstudio.bukkitrepl.BukkitExpression.player;
 import static team.unstudio.bukkitrepl.BukkitRuntimeREPL.i18n;
 
@@ -43,7 +35,7 @@ public final class ConsoleManager implements Listener{
 
     public void init() {
         PluginUtils.registerEvents(this, BukkitRuntimeREPL.getInstance());
-        CacheUtils.registerPlayerCache(inConsolePlayers);
+        CacheUtils.register(inConsolePlayers);
     }
 
     private Map<Player, Console> playerConsoles = Maps.newConcurrentMap();
@@ -135,7 +127,7 @@ public final class ConsoleManager implements Listener{
                 ChatUtils.sendSplitter(event.getPlayer());
             } else {
                 event.getPlayer().sendMessage(ChatColor.BOLD + "[Input] " + event.getMessage());
-                aync(() -> playerConsoles.get(event.getPlayer()).execute(event.getMessage()));
+                asyn(() -> playerConsoles.get(event.getPlayer()).execute(event.getMessage()));
             }
         }
     }

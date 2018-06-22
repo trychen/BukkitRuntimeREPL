@@ -11,8 +11,8 @@ en-US                                                                         |z
 §7§l[Players Opened REPL] §r§7%s                                              |§7§l[已开启 REPL 的玩家] §r§7%s
 §7§l[Ports Running REPL] §r§7%s                                               |§7§l[已开启 REPL 的端口] §r§7%s
 §c§l[REPL Manager] §cNo such player or port has console!                      |§c§l[REPL] §c找不到对应的终端!
-§3§l[REPL Manager] §r§3start - Start a console on chat                        |§3§l[REPL 管理命令] §r§3start - 在聊天框运行一个终端
-§3§l[REPL Manager] §r§3start [port] - Start a remote console to port          |§3§l[REPL 管理命令] §r§3start [端口] - 在端口运行远程终端
+§3§l[REPL Manager] §r§3start - Start a console on chat                        |§3§l[REPL 管理命令] §r§3chat - 在聊天框运行一个终端
+§3§l[REPL Manager] §r§3start [port] - Start a remote console to port          |§3§l[REPL 管理命令] §r§3remove [端口] - 在端口运行远程终端
 §3§l[REPL Manager] §r§3list - Show all console                                |§3§l[REPL 管理命令] §r§3list - 查看所有运行终端
 §3§l[REPL Manager] §r§3shut [port/playerName] - Stop a remote/player's console|§3§l[REPL 管理命令] §r§3shut [端口/玩家名字] - 关闭一个远程或玩家的终端
 §c§l[REPL] §cYou have no permission to shutdown console!                      |§c§l[REPL] §c你没有权限关闭终端！

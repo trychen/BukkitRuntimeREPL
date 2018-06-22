@@ -10,7 +10,6 @@ import javarepl.console.ConsoleLogger;
 import javarepl.console.SimpleConsole;
 import javarepl.console.commands.*;
 import javarepl.console.rest.RestConsole;
-import javarepl.internal.totallylazy.Arrays;
 import javarepl.internal.totallylazy.Sequence;
 import javarepl.internal.totallylazy.Sequences;
 import org.apache.commons.lang3.ArrayUtils;
@@ -23,7 +22,7 @@ import team.unstudio.bukkitrepl.command.InitBukkitCommand;
 import team.unstudio.bukkitrepl.command.LoadPluginCommand;
 import team.unstudio.bukkitrepl.event.PlayerConsoleCreateEvent;
 import team.unstudio.bukkitrepl.event.RemoteConsoleCreateEvent;
-import team.unstudio.udpl.util.ReflectionUtils;
+import team.unstudio.udpl.util.reflect.ReflectionUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -32,6 +31,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.List;
 
 import static javarepl.Result.result;
@@ -117,8 +117,8 @@ public interface BukkitConsoleHelper {
 
     static URL[] getNecessaryClasspath() {
         try {
-            URL[] pluginURLs = (URL[]) ReflectionUtils.invokeMethod(BukkitRuntimeREPL.class.getClassLoader(), "getURLs");
-            URL[] bukkitURLs = (URL[]) ReflectionUtils.invokeMethod(Bukkit.class.getClassLoader(), "getURLs");
+            URL[] pluginURLs = (URL[]) ReflectionUtils.invokeMethod(BukkitRuntimeREPL.class.getClassLoader(), URLClassLoader.class, "getURLs", false);
+            URL[] bukkitURLs = (URL[]) ReflectionUtils.invokeMethod(Bukkit.class.getClassLoader(), URLClassLoader.class, "getURLs", false);
 
             return ArrayUtils.addAll(pluginURLs, bukkitURLs);
         } catch (Throwable e) {
